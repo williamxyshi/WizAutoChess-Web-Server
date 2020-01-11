@@ -1,39 +1,65 @@
+#source virt/bin/activate
+
+from playerdata import PlayerData
+from gamedata import GameData
 from flask import Flask
-
-# print a nice greeting.
-def say_hello(username = "World"):
-    return '<p>Hello %s!</p>\n' % username
-
-# some bits of text for the page.
-header_text = '''
-    <html>\n<head> <title>EB Flask Test</title> </head>\n<body>'''
-instructions = '''
-    <p><em>Hint</em>: This is a RESTful web service! Append a username
-    to the URL (for example: <code>/Thelonious</code>) to say hello to
-    someone specific.</p>\n'''
-home_link = '<p><a href="/">Back</a></p>\n'
-footer_text = '</body>\n</html>'
+from flask import jsonify, request
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
 
-# add a rule for the index page.
-application.add_url_rule('/', 'index', (lambda: header_text +
-    say_hello() + instructions + footer_text))
+#stores playerId's
+playerIDs = []
 
-# add a rule when the page is accessed with a name appended to the site
-# URL.
-application.add_url_rule('/<username>', 'hello', (lambda username:
+#list of all player data objects
+players = []
 
-    if(True):
-        print("bruh")
-    
-    header_text + say_hello(username) + home_link + footer_text))
+gamedata = GameData()
+
+
+def restartGame():
+    player = PlayerData()
+    gamedata = GameData()
+
+def setPlayer(playerID: int, username = "basename"):
+    player = PlayerData()
+
+    player.resetPlayer(playerID, username)
+    players.append(player)
+    return jsonify(player.username)
+
+
+
+
+@application.route('/', methods=['GET'])
+def home():
+    if(len(playerIDs) == 0):
+        restartGame()
+        
+    id = len(playerIDs)
+    playerIDs.append(id)
+
+    return jsonify(str(id))
+
+
+@application.route('/adduser', methods=['GET'])
+def addUser():
+    if 'username' in request.args:
+        username = request.args['username']
+    else:
+        return "Error: No username field provided. Please specify an username."
+
+
+
+    return setPlayer(username)
+
+
+
+
 
 # run the app.
 if __name__ == "__main__":
     
-
     #remove before production
     application.debug = True
 
