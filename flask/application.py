@@ -24,11 +24,17 @@ application.add_url_rule('/', 'index', (lambda: header_text +
 # add a rule when the page is accessed with a name appended to the site
 # URL.
 application.add_url_rule('/<username>', 'hello', (lambda username:
+
+    if(True):
+        print("bruh")
+    
     header_text + say_hello(username) + home_link + footer_text))
 
 # run the app.
 if __name__ == "__main__":
-    # Setting debug to True enables debug output. This line should be
-    # removed before deploying a production app.
+    
+
+    #remove before production
     application.debug = True
+
     application.run()
