@@ -21,7 +21,8 @@ def restartGame():
     player = PlayerData()
     gamedata = GameData()
 
-def setPlayer(playerID: int, username = "basename"):
+
+def setPlayer(playerID: int, username: str = "basename"):
     player = PlayerData()
 
     player.resetPlayer(playerID, username)
@@ -49,9 +50,16 @@ def addUser():
     else:
         return "Error: No username field provided. Please specify an username."
 
+    if 'id' in request.args:
+        id = int(request.args['id'])
 
+    print(username)
+    print(id)
 
-    return setPlayer(username)
+    if id in playerIDs:
+        return setPlayer(id, username)
+    else:
+        return jsonify(str(-1))
 
 
 
