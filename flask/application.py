@@ -1,4 +1,5 @@
-#source virt/bin/activate
+#source virt/Scripts/activate
+#eb create flask-env
 
 from playerdata import PlayerData
 from gamedata import GameData
