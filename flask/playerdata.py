@@ -10,6 +10,18 @@ class PlayerData:
 		self.initialized = False
 		self.id = -1
 
+		self.boardLayoutString = ""
+		self.purchasableUnits = ""
+		self.bench = ""
+
+		self.health = -1
+
+		self.lvl = -1
+		self.xp = -1
+
+		self.gold = -1
+
+
 	def resetPlayer(self, playerID:int, username = "basename"):
 		self.username = username
 		self.id = playerID

@@ -1,0 +1,1 @@
+#constants used throughout the game

@@ -15,6 +15,7 @@ playerIDs = []
 #list of all player data objects
 players = []
 
+#stores game data
 gamedata = GameData()
 
 
@@ -28,8 +29,15 @@ def setPlayer(playerID: int, username: str = "basename"):
 
     player.resetPlayer(playerID, username)
     players.append(player)
+    gamedata.players = gamedata.players + 1
     return jsonify(player.username)
 
+def updatePlayer(playerID: int, newUsername: str):
+    for player in players:
+        if player.id == playerID:
+            player.username = newUsername
+            return True
+    return False
 
 
 
@@ -58,7 +66,10 @@ def addUser():
     print(id)
 
     if id in playerIDs:
-        return setPlayer(id, username)
+        if updatePlayer(id, username) == False:
+            return setPlayer(id, username)
+        else:
+            return username
     else:
         return jsonify(str(-1))
 
