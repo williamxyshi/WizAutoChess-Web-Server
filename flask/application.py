@@ -3,6 +3,7 @@
 
 from playerdata import PlayerData
 from gamedata import GameData
+import constants
 from flask import Flask
 from flask import jsonify, request
 
@@ -40,7 +41,6 @@ def updatePlayer(playerID: int, newUsername: str):
     return False
 
 
-
 @application.route('/', methods=['GET'])
 def home():
     if(len(playerIDs) == 0):
@@ -69,11 +69,9 @@ def addUser():
         if updatePlayer(id, username) == False:
             return setPlayer(id, username)
         else:
-            return username
+            return jsonify(username)
     else:
         return jsonify(str(-1))
-
-
 
 
 
