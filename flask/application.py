@@ -3,12 +3,25 @@
 
 from playerdata import PlayerData
 from gamedata import GameData
+# from flask_pymongo import PyMongo
 import constants
+import db
 from flask import Flask
 from flask import jsonify, request
 
-# EB looks for an 'application' callable by default.
+#connection string mongodb+srv://wazord:<password>@wizautochess-hodzs.mongodb.net/test?retryWrites=true&w=majority
+
+# # EB looks for an 'application' callable by default.
 application = Flask(__name__)
+#
+# mongo = pymongo.MongoClient('mongodb+srv://wazord:EaCxw2BHWU4FvC5w@myInstance-gktww.gcp.mongodb.net/admin', maxPoolSize=50, connect=False)
+#
+# db = pymongo.database.Database(mongo, 'mydatabase')
+# col = pymongo.collection.Collection(db, 'mycollection')
+
+
+# application.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
+# mongo = PyMongo(app)
 
 #stores playerId's
 playerIDs = []
@@ -40,8 +53,12 @@ def updatePlayer(playerID: int, newUsername: str):
             return True
     return False
 
+@application.route("/insertplayercount")
+def test():
+    db.db.collection.insert_one({"player": str(players)})
+    return jsonify(result = "successfully inserted into database")
 
-@application.route('/', methods=['GET'])
+@application.route('/start', methods=['GET'])
 def home():
     if(len(playerIDs) == 0):
         restartGame()
