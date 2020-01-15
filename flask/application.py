@@ -31,7 +31,7 @@ def setPlayer(playerID: int, username: str = "basename"):
     player.resetPlayer(playerID, username)
     players.append(player)
     gamedata.players = gamedata.players + 1
-    return jsonify(player.username)
+    return jsonify(result=player.username)
 
 def updatePlayer(playerID: int, newUsername: str):
     for player in players:
@@ -49,7 +49,7 @@ def home():
     id = len(playerIDs)
     playerIDs.append(id)
 
-    return jsonify(str(id))
+    return jsonify(id=str(id))
 
 
 @application.route('/adduser', methods=['GET'])
@@ -69,9 +69,9 @@ def addUser():
         if updatePlayer(id, username) == False:
             return setPlayer(id, username)
         else:
-            return jsonify(username)
+            return jsonify(result=username)
     else:
-        return jsonify(str(-1))
+        return jsonify(result=str(-1))
 
 
 
