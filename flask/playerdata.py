@@ -9,6 +9,7 @@ class PlayerData:
 		self.username = "basename"
 		self.initialized = False
 		self.id = -1
+		self.ready = False
 
 		self.boardLayoutString = ""
 		self.purchasableUnits = ""

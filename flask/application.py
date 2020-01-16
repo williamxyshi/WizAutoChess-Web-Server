@@ -7,7 +7,7 @@ from gamedata import GameData
 import constants
 import db
 from flask import Flask
-from flask import jsonify, request
+from flask import jsonify, request, json
 
 #connection string mongodb+srv://wazord:<password>@wizautochess-hodzs.mongodb.net/test?retryWrites=true&w=majority
 
@@ -53,10 +53,12 @@ def updatePlayer(playerID: int, newUsername: str):
             return True
     return False
 
+
 @application.route("/insertplayercount")
 def test():
     db.db.collection.insert_one({"player": str(players)})
     return jsonify(result = "successfully inserted into database")
+
 
 @application.route('/start', methods=['GET'])
 def home():
@@ -69,7 +71,7 @@ def home():
     return jsonify(id=str(id))
 
 
-@application.route('/adduser', methods=['GET'])
+@application.route('/lobby/adduser', methods=['GET'])
 def addUser():
     if 'username' in request.args:
         username = request.args['username']
@@ -90,6 +92,36 @@ def addUser():
     else:
         return jsonify(result=str(-1))
 
+
+@application.route("/lobby/ready")
+def readyPlayer():
+    """Todo: implement readying method
+    """
+
+
+@application.route("/lobby/getplayers")
+def getPlayers():
+    playerList = []
+    for player in players:
+        playerList.append( { "username": player.username, "ready": player.ready})
+
+
+    returnJson = {
+        "playercount": len(players),
+        "players" : playerList
+    }
+    return jsonify(
+        result = returnJson
+    )
+
+@application.route("/game/gamestate")
+def gameState():
+    """
+    main function where the client transmits their game state and server
+    saves to mongodb
+
+    :return:
+    """
 
 
 # run the app.
