@@ -95,16 +95,39 @@ def addUser():
 
 @application.route("/lobby/ready")
 def readyPlayer():
-    """Todo: implement readying method
-    """
+    if 'id' in request.args:
+        id = int(request.args['id'])
+    else:
+        return "Error: ID ERROR"
+
+    for player in players:
+        if(player.id == id):
+            player.ready = True
+            return jsonify(str(player.ready))
+
+    return "no player found"
+
+
+@application.route("/lobby/unready")
+def unreadyPlayer():
+    if 'id' in request.args:
+        id = int(request.args['id'])
+    else:
+        return "Error: ID ERROR"
+
+    for player in players:
+        if (player.id == id):
+            player.ready = False
+            return jsonify(str(player.ready))
+
+    return "no player found"
 
 
 @application.route("/lobby/getplayers")
 def getPlayers():
     playerList = []
     for player in players:
-        playerList.append( { "username": player.username, "ready": player.ready})
-
+        playerList.append( { "username": player.username, "ready": str(player.ready)})
 
     returnJson = {
         "playercount": len(players),
