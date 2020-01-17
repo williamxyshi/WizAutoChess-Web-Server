@@ -131,7 +131,7 @@ def getPlayers():
 
     returnJson = {
         "playercount": len(players),
-        "players" : playerList
+        "playersinfo" : playerList
     }
     return jsonify(
         result = returnJson
