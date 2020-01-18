@@ -131,11 +131,9 @@ def getPlayers():
 
     returnJson = {
         "playercount": len(players),
-        "playersinfo" : playerList
+        "players" : playerList
     }
-    return jsonify(
-        result = returnJson
-    )
+    return jsonify(result=returnJson)
 
 @application.route("/game/gamestate")
 def gameState():
