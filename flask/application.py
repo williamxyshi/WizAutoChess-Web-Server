@@ -151,4 +151,5 @@ if __name__ == "__main__":
     #remove before production
     application.debug = True
 
-    application.run()
+    #open to all connections
+    application.run(host = '0.0.0.0')
