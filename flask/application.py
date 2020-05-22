@@ -81,6 +81,7 @@ def addUser():
     if 'id' in request.args:
         id = int(request.args['id'])
 
+
     print(username)
     print(id)
 
@@ -128,12 +129,14 @@ def getPlayers():
     playerList = []
     for player in players:
         playerList.append( { "username": player.username, "ready": str(player.ready)})
+        print(player.username)
+        print(player.ready)
 
     returnJson = {
         "playercount": len(players),
         "players" : playerList
     }
-    return jsonify(result=returnJson)
+    return jsonify(returnJson)
 
 @application.route("/game/gamestate")
 def gameState():
